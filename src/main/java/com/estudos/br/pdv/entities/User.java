@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor @AllArgsConstructor
 @Entity
@@ -20,4 +22,6 @@ public class User {
 
     private boolean isEnabled;
 
+    @OneToMany(mappedBy = "user")
+    private List<Sale> sales;
 }
