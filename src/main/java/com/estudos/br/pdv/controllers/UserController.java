@@ -24,6 +24,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity post(@RequestBody User user) {
         try {
+            user.setEnabled(true);
             return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -2,6 +2,7 @@ package com.estudos.br.pdv.controllers;
 
 import com.estudos.br.pdv.entities.Product;
 import com.estudos.br.pdv.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    @Autowired
     private ProductRepository productRepository;
 
     @GetMapping

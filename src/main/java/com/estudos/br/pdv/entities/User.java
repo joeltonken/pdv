@@ -22,6 +22,6 @@ public class User {
 
     private boolean isEnabled;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Sale> sales;
 }
