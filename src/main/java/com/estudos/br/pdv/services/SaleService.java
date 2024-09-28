@@ -2,6 +2,7 @@ package com.estudos.br.pdv.services;
 
 import com.estudos.br.pdv.dtos.ProductDTO;
 import com.estudos.br.pdv.dtos.SaleDTO;
+import com.estudos.br.pdv.dtos.SaleInfoDTO;
 import com.estudos.br.pdv.entities.ItemSale;
 import com.estudos.br.pdv.entities.Product;
 import com.estudos.br.pdv.entities.Sale;
@@ -26,6 +27,10 @@ public class SaleService {
     private final ProductRepository productRepository;
     private final SaleRepository saleRepository;
     private final ItemSaleRepository itemSaleRepository;
+
+    public List<SaleInfoDTO> findAll() {
+
+    }
 
     @Transactional
     public long save(SaleDTO dto) {
