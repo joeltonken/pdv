@@ -30,6 +30,7 @@ public class SaleService {
     private final SaleRepository saleRepository;
     private final ItemSaleRepository itemSaleRepository;
 
+    @Transactional
     public List<SaleInfoDTO> findAll() {
         return saleRepository.findAll().stream().map(sale -> getSaleInfo(sale)).collect(Collectors.toList());
     }
@@ -54,7 +55,6 @@ public class SaleService {
 
     @Transactional
     public long save(SaleDTO dto) {
-
         User user = repository.findById(dto.getUserId()).get();
 
         Sale newSale = new Sale();

@@ -15,7 +15,7 @@ public class SaleController {
     private SaleService saleService;
 
     @GetMapping
-    public ResponseEntity getAll(@RequestBody SaleDTO saleDTO) {
+    public ResponseEntity getAll() {
         return new ResponseEntity<>(saleService.findAll(), HttpStatus.OK);
     }
 
