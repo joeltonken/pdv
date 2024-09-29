@@ -19,6 +19,11 @@ public class SaleController {
         return new ResponseEntity<>(saleService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+        return new ResponseEntity<>(saleService.getById(id), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
         try {

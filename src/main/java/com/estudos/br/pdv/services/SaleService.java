@@ -54,6 +54,12 @@ public class SaleService {
     }
 
     @Transactional
+    public SaleInfoDTO getById(long id) {
+        Sale sale = saleRepository.findById(id).get();
+        return getSaleInfo(sale);
+    }
+
+    @Transactional
     public long save(SaleDTO dto) {
         User user = repository.findById(dto.getUserId()).get();
 
