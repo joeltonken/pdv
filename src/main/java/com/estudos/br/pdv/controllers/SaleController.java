@@ -1,6 +1,8 @@
 package com.estudos.br.pdv.controllers;
 
 import com.estudos.br.pdv.dtos.SaleDTO;
+import com.estudos.br.pdv.exceptions.InvalidOperationException;
+import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ public class SaleController {
         try {
             long id = saleService.save(saleDTO);
             return new ResponseEntity<>("Venda realizada com sucesso: " + id, HttpStatus.CREATED);
+        } catch (NoItemFoundException | InvalidOperationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
