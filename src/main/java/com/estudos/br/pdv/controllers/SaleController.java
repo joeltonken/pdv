@@ -23,7 +23,11 @@ public class SaleController {
 
     @GetMapping("{id}")
     public ResponseEntity getById(@PathVariable Long id) {
-        return new ResponseEntity<>(saleService.getById(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(saleService.getById(id), HttpStatus.OK);
+        } catch (NoItemFoundException | InvalidOperationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping

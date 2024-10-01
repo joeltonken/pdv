@@ -57,22 +57,23 @@ public class SaleService {
 
     @Transactional
     public SaleInfoDTO getById(long id) {
-        Sale sale = saleRepository.findById(id).get();
+        Sale sale = saleRepository.findById(id)
+                .orElseThrow(() -> new NoItemFoundException("Venda não encontrada."));
+
         return getSaleInfo(sale);
     }
 
     @Transactional
     public long save(SaleDTO dto) {
-        User user = repository.findById(dto.getUserId()).get();
+        User user = repository.findById(dto.getUserId())
+                .orElseThrow(() -> new NoItemFoundException("Usuário não encontrado."));
 
         Sale newSale = new Sale();
         newSale.setUser(user);
         newSale.setDate(LocalDate.now());
 
         List<ItemSale> items = getItemSale(dto.getItems());
-
         newSale = saleRepository.save(newSale);
-
         saveItemSale(items, newSale);
 
         return newSale.getId();
@@ -88,6 +89,9 @@ public class SaleService {
     }
 
     private List<ItemSale> getItemSale(List<ProductDTO> products) {
+
+        if (products.isEmpty())
+            throw new InvalidOperationException("Não é possível adicionar a venda sem itens");
 
         return products.stream().map(item -> {
             Product product = productRepository.getReferenceById(item.getProductId());
