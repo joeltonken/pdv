@@ -1,13 +1,13 @@
 package com.estudos.br.pdv.controllers;
 
+import com.estudos.br.pdv.dtos.ResponseDTO;
 import com.estudos.br.pdv.entities.User;
+import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -33,13 +33,13 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity put(@RequestBody User user) {
-        Optional<User> userToEdit = userService.findById(user.getId());
-        if (userToEdit.isPresent()){
-            userService.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(userService.update(user), HttpStatus.CREATED);
+        } catch (NoItemFoundException error) {
+            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), user), HttpStatus.BAD_REQUEST);
+        } catch (Exception error) {
+            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
