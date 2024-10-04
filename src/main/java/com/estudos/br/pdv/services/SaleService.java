@@ -49,6 +49,7 @@ public class SaleService {
     private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
         return items.stream().map(item -> {
             ProductInfoDTO productInfoDTO = new ProductInfoDTO();
+            productInfoDTO.setProductId(item.getId());
             productInfoDTO.setDescription(item.getProduct().getDescription());
             productInfoDTO.setQuantity(item.getQuantity());
             return productInfoDTO;
@@ -94,7 +95,8 @@ public class SaleService {
             throw new InvalidOperationException("Não é possível adicionar a venda sem itens");
 
         return products.stream().map(item -> {
-            Product product = productRepository.getReferenceById(item.getProductId());
+            Product product = productRepository.findById(item.getProductId())
+                    .orElseThrow(() -> new NoItemFoundException("Item da venda não encontrado."));
 
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);

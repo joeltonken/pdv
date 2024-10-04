@@ -5,6 +5,7 @@ import com.estudos.br.pdv.entities.User;
 import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +37,9 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.update(user), HttpStatus.CREATED);
         } catch (NoItemFoundException error) {
-            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), user), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
-            return new ResponseEntity<>(new ResponseDTO<>(error.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -46,8 +47,10 @@ public class UserController {
     public ResponseEntity delete(@PathVariable Long id) {
         try {
             userService.deleteById(id);
-            return new ResponseEntity<>("Usuário removido com sucesso.", HttpStatus.OK);
-        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseDTO("Usuário removido com sucesso."), HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>(new ResponseDTO("Não foi possível localizar o usuário."), HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
