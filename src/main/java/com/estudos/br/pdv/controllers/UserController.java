@@ -36,8 +36,6 @@ public class UserController {
     public ResponseEntity put(@RequestBody User user) {
         try {
             return new ResponseEntity<>(userService.update(user), HttpStatus.CREATED);
-        } catch (NoItemFoundException error) {
-            return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception error) {
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -50,7 +48,7 @@ public class UserController {
             return new ResponseEntity<>(new ResponseDTO("Usuário removido com sucesso."), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             return new ResponseEntity<>(new ResponseDTO("Não foi possível localizar o usuário."), HttpStatus.BAD_REQUEST);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
