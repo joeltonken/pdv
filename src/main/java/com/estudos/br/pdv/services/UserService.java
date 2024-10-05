@@ -5,8 +5,7 @@ import com.estudos.br.pdv.entities.User;
 import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<UserDTO> findAll(){
+    public List<UserDTO> findAll() {
         return userRepository.findAll().stream().map(user ->
                 new UserDTO(user.getId(), user.getName(), user.isEnabled())).collect(Collectors.toList());
     }
@@ -51,6 +50,9 @@ public class UserService {
     }
 
     public void deleteById(long id) {
+        if (!userRepository.existsById(id))
+            throw new EmptyResultDataAccessException(1);
+
         userRepository.deleteById(id);
     }
 
