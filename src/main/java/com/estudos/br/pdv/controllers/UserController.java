@@ -1,6 +1,7 @@
 package com.estudos.br.pdv.controllers;
 
 import com.estudos.br.pdv.dtos.ResponseDTO;
+import com.estudos.br.pdv.dtos.UserDTO;
 import com.estudos.br.pdv.entities.User;
 import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.services.UserService;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity post(@Valid @RequestBody User user) {
+    public ResponseEntity post(@Valid @RequestBody UserDTO user) {
         try {
             user.setEnabled(true);
             return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity put(@Valid @RequestBody User user) {
+    public ResponseEntity put(@Valid @RequestBody UserDTO user) {
         try {
             return new ResponseEntity<>(userService.update(user), HttpStatus.CREATED);
         } catch (Exception error) {
