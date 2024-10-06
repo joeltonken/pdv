@@ -3,6 +3,7 @@ package com.estudos.br.pdv.controllers;
 import com.estudos.br.pdv.dtos.ResponseDTO;
 import com.estudos.br.pdv.dtos.SaleDTO;
 import com.estudos.br.pdv.services.SaleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity post(@RequestBody SaleDTO saleDTO) {
+    public ResponseEntity post(@Valid @RequestBody SaleDTO saleDTO) {
         try {
             saleService.save(saleDTO);
             return new ResponseEntity<>(new ResponseDTO("Venda realizada com sucesso!"), HttpStatus.CREATED);
