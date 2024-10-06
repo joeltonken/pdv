@@ -76,6 +76,12 @@
             <scope>test</scope>
             <!-- Suporte a testes unitários e de integração -->
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.0.0</version>
+            <!-- Biblioteca para mapeamento de objetos -->
+        </dependency>
     </dependencies>
 
     <build>

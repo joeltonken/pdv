@@ -5,6 +5,7 @@ import com.estudos.br.pdv.entities.User;
 import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private ModelMapper modelMapper = new ModelMapper();
 
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream().map(user ->
@@ -24,9 +26,7 @@ public class UserService {
     }
 
     public UserDTO save(UserDTO user) {
-        User userToSave = new User();
-        userToSave.setEnabled(user.isEnabled());
-        userToSave.setName(user.getName());
+        User userToSave = modelMapper.map(user, User.class);
         userRepository.save(userToSave);
         return new UserDTO(userToSave.getId(), userToSave.getName(), userToSave.isEnabled());
     }
@@ -42,10 +42,7 @@ public class UserService {
     }
 
     public UserDTO update(UserDTO user) {
-        User userToSave = new User();
-        userToSave.setEnabled(user.isEnabled());
-        userToSave.setName(user.getName());
-        userToSave.setId(user.getId());
+        User userToSave = modelMapper.map(user, User.class);
 
         Optional<User> userToEdit = userRepository.findById(userToSave.getId());
 

@@ -1,6 +1,6 @@
 package com.estudos.br.pdv.services;
 
-import com.estudos.br.pdv.dtos.ProductDTO;
+import com.estudos.br.pdv.dtos.ProductSaleDTO;
 import com.estudos.br.pdv.dtos.ProductInfoDTO;
 import com.estudos.br.pdv.dtos.SaleDTO;
 import com.estudos.br.pdv.dtos.SaleInfoDTO;
@@ -95,7 +95,7 @@ public class SaleService {
 
     }
 
-    private List<ItemSale> getItemSale(List<ProductDTO> products) {
+    private List<ItemSale> getItemSale(List<ProductSaleDTO> products) {
 
         if (products.isEmpty())
             throw new InvalidOperationException("Não é possível adicionar a venda sem itens");
