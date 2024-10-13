@@ -22,6 +22,14 @@ public class User {
     @NotBlank(message = "O campo nome é obrigatório.")
     private String name;
 
+    @Column(length = 30, nullable = false)
+    @NotBlank(message = "O campo username é obrigatório.")
+    private String username;
+
+    @Column(length = 30, nullable = false)
+    @NotBlank(message = "O campo senha é obrigatório.")
+    private String password;
+
     private boolean isEnabled;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
