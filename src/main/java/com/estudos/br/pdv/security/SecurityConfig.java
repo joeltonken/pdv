@@ -1,7 +1,10 @@
 package com.estudos.br.pdv.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +24,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
     public static PasswordEncoder passwordEncoder(){
             return new BCryptPasswordEncoder();
     }
@@ -33,6 +39,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()); // Desabilita CSRF
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
     }
 
     @Bean
