@@ -1,6 +1,7 @@
 package com.estudos.br.pdv.services;
 
 import com.estudos.br.pdv.dtos.UserDTO;
+import com.estudos.br.pdv.dtos.UserResponseDTO;
 import com.estudos.br.pdv.entities.User;
 import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.repositories.UserRepository;
@@ -21,9 +22,9 @@ public class UserService {
     private final UserRepository userRepository;
     private ModelMapper modelMapper = new ModelMapper();
 
-    public List<UserDTO> findAll() {
+    public List<UserResponseDTO> findAll() {
         return userRepository.findAll().stream().map(user ->
-                new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getPassword(),
+                new UserResponseDTO(user.getId(), user.getName(), user.getUsername(),
                         user.isEnabled())).collect(Collectors.toList());
     }
 

@@ -2,8 +2,6 @@ package com.estudos.br.pdv.controllers;
 
 import com.estudos.br.pdv.dtos.ResponseDTO;
 import com.estudos.br.pdv.dtos.UserDTO;
-import com.estudos.br.pdv.entities.User;
-import com.estudos.br.pdv.exceptions.NoItemFoundException;
 import com.estudos.br.pdv.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
