@@ -3,6 +3,7 @@ package com.estudos.br.pdv.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
@@ -34,12 +35,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(
-                                "/info"
+                        .requestMatchers(HttpMethod.POST,"/users"
                         ).permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults()) // Use a configuração padrão para autenticação básica
-                .csrf(csrf -> csrf.disable()); // Desabilita CSRF
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable()); // Desabilita CSRF
 
         return http.build();
     }
