@@ -87,6 +87,19 @@
             <version>3.0.0</version>
             <!-- Biblioteca para mapeamento de objetos -->
         </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+            <!-- Suporte à criação e verificação de JWT -->
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+            <!-- Implementação do JJWT -->
+        </dependency>
     </dependencies>
 
     <build>
