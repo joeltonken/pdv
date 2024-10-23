@@ -26,6 +26,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST,"/users").permitAll()
                         .requestMatchers("/sign-up").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults()) // Use a configuração padrão para autenticação básica
                 .sessionManagement((session)-> session
