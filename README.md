@@ -21,12 +21,14 @@ Este projeto é uma aplicação de Ponto de Venda (PDV) desenvolvida em Java uti
 - **Spring Data JPA**
 - **MYSQL** (banco de dados)
 - **Maven** (gerenciador de dependências)
+- **JWT** 
 
 ## Funcionalidades
 
+- Cadastro de usuário
+- Login
 - Cadastro de produtos
 - Registro de vendas
-- Login
 
 ## Pré-requisitos
 
@@ -45,7 +47,7 @@ Antes de começar, verifique se você possui os seguintes pré-requisitos:
 2. Navegue até o diretório do projeto:
 
    ```bash
-    cd pdv-java-spring
+    cd pdv
    ```
    
 3. Compile e inicie a aplicação:
@@ -58,6 +60,7 @@ Acesse a aplicação: Abra o navegador e vá até http://localhost:8080.
 
 ## Estrutura do Projeto
 
+```
 pdv-java-spring/
 ├── src/
 │   ├── main/
@@ -81,13 +84,8 @@ pdv-java-spring/
 │               └── com.estudos.br.pdv/
 │                   └── PdvApplicationTests
 └── pom.xml
+```
 
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para enviar um pull request ou abrir um issue para discutir melhorias ou correções.
-
-
-
-
-   
-
