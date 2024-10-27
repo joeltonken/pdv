@@ -1,10 +1,15 @@
 package com.estudos.br.pdv.security;
 
+import com.estudos.br.pdv.dtos.ResponseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,24 +26,37 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
 
-        if (authorization != null && authorization.startsWith("Bearer")) {
-            String token = authorization.split(" ")[1];
-            String username = jwtService.getUsername(token);
+        try {
+            String authorization = request.getHeader("Authorization");
 
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+            if (authorization != null && authorization.startsWith("Bearer")) {
+                String token = authorization.split(" ")[1];
+                String username = jwtService.getUsername(token);
 
-            // Cria um usuário que será inserido um contexto do spring security
-            UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-            // Configurando o spring security com uma autenticação web
-            usernamePAT.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                // Cria um usuário que será inserido um contexto do spring security
+                UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
 
-            SecurityContextHolder.getContext().setAuthentication(usernamePAT);
+                // Configurando o spring security com uma autenticação web
+                usernamePAT.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(usernamePAT);
+            }
+
+            filterChain.doFilter(request, response);
+        } catch (RuntimeException e) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().write(convertObjectToJson(new ResponseDTO("Token inválido!")));
         }
-
-        filterChain.doFilter(request, response);
     }
+
+    public String convertObjectToJson(ResponseDTO responseDTO) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(responseDTO);
+    }
+
 }
