@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: pdv
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/pdv_db?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # Visualizar o SQL
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+    # Criar tabelas
+    hibernate:
+      ddl-auto: update
+
+    # Configuracao do JPA para controlar se o contexto de persistencia deve estar aberto durante a visualizacao
+    open-in-view: false
+
+server:
+  # Configuracao do servidor para determinar quando incluir a pilha de rastreamento nos erros
+  error:
+    include-stacktrace: never
+
+security:
+  jwt:
+    expiration: 30
+    key: c0c5aF9waU1NeG9HcGF6NW1Nb0hhYjFna0pQY0F1UjUyMnJYb1R2R0pUd0hqaTlB
