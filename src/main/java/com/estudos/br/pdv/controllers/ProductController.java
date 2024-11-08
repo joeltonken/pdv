@@ -5,8 +5,8 @@ import com.estudos.br.pdv.dtos.ResponseDTO;
 import com.estudos.br.pdv.entities.Product;
 import com.estudos.br.pdv.repositories.ProductRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    private ProductRepository productRepository;
-    private ModelMapper mapper = new ModelMapper();
+    private final ProductRepository productRepository;
+    private final ModelMapper mapper = new ModelMapper();
 
     @GetMapping
     public ResponseEntity<List<Product>> getAll() {
