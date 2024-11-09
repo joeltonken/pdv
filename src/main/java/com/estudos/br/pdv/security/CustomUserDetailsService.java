@@ -3,7 +3,6 @@ package com.estudos.br.pdv.security;
 import com.estudos.br.pdv.dtos.LoginDTO;
 import com.estudos.br.pdv.entities.User;
 import com.estudos.br.pdv.exceptions.PasswordNotFoundException;
-import com.estudos.br.pdv.repositories.UserRepository;
 import com.estudos.br.pdv.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

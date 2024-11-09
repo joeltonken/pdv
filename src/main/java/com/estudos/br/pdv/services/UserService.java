@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public List<UserResponseDTO> findAll() {
         return userRepository.findAll().stream().map(user ->
