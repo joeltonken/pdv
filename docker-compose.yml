@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: pdvapi
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - pdvappnetwork
+
+  # Adicione um cliente MySQL se necessário
+  # mysql-client:
+  #   image: mysql:latest
+  #   networks:
+  #     - pdvappnetwork
+  #   command: ["mysql", "-h", "db", "-u", "user", "-ppassword", "imageapi"]
+
+networks:
+  pdvappnetwork:
+    driver: bridge
