@@ -68,6 +68,7 @@ pdv-java-spring/
 │   │   │   └── com/
 │   │   │       └── estudos.br/
 │   │   │           └── pdv/
+│   │   │               ├── config/
 │   │   │               ├── controllers/
 │   │   │               ├── dtos/
 │   │   │               ├── entities/

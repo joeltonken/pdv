@@ -1,4 +1,4 @@
-package com.estudos.br.pdv.security;
+package com.estudos.br.pdv.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
