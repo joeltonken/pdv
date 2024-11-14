@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/users").permitAll()
                         .requestMatchers("/sign-up").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults()) // Use a configuração padrão para autenticação básica
                 .sessionManagement((session)-> session

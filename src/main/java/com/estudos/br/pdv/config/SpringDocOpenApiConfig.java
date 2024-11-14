@@ -16,7 +16,7 @@ public class SpringDocOpenApiConfig {
                 .info(
                         new Info()
                                 .title("REST API - PDV")
-                                .description("API para PDV")
+                                .description("API de Ponto de Venda - PDV")
                                 .version("v1")
                                 .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0"))
                                 .contact(new Contact().name("Joelton Gomes").email("joeken.jp@gmail.com"))
