@@ -1,42 +1,61 @@
 package com.estudos.br.pdv.config;
 
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.springframework.context.annotation.Bean;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@OpenAPIDefinition(
+        info = @Info(
+                contact = @Contact(
+                        name = "Joelton Gomes",
+                        email = "joeken.jp@gmail.com",
+                        url = "https://github.com/joeltonken/pdv"
+                ),
+                description = "API de Ponto de Venda - PDV",
+                title = "REST API - PDV",
+                version = "1.0",
+                license = @License(
+                        name = "Apache 2.0",
+                        url = "https://www.apache.org/licenses/LICENSE-2.0"
+                ),
+                termsOfService = "TERMOS DE SERVIÇO"
+        ),
+        servers = {
+                @Server(
+                        description = "LOCAL",
+                        url = "http://localhost:8080"
+                )
+        },
+        security = {
+                @SecurityRequirement(
+                        name = "bearerAuth"
+                )
+        }
+)
+@SecurityScheme(
+        name = "bearerAuth",
+        description = "JWT Auth description",
+        scheme = "bearer",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        in = SecuritySchemeIn.HEADER
+)
 public class SpringDocOpenApiConfig {
 
-    @Bean
-    public OpenAPI openAPI() {
-        return new OpenAPI()
-                .info(
-                        new Info()
-                                .title("REST API - PDV")
-                                .description("API de Ponto de Venda - PDV")
-                                .version("v1")
-                                .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0"))
-                                .contact(new Contact().name("Joelton Gomes").email("joeken.jp@gmail.com")))
-                .addSecurityItem(new SecurityRequirement().addList("JWT"))
-                .components(new Components()
-                                .addSecuritySchemes("JWT", createJWT()));
-    }
-
-    private SecurityScheme createJWT() {
-        return new SecurityScheme()
-                .name("JWT")
-                .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JWT")
-                .in(SecurityScheme.In.HEADER)
-                .name("Authorization");
-    }
-
+//    @Bean
+//    public GroupedOpenApi publicApi() {
+//        return GroupedOpenApi.builder()
+//                .group("public-api")
+//                .pathsToMatch("/**")
+//                .build();
+//    }
 
 }
